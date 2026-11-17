@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Electronics Shops Near Cairo Metro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fafaf9;
+      --card: #ffffff;
+      --text: #1c1917;
+      --muted: #78716c;
+      --border: #e7e5e4;
+      --accent: #0f766e;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1c1917;
+        --card: #292524;
+        --text: #fafaf9;
+        --muted: #a8a29e;
+        --border: #44403c;
+        --accent: #2dd4bf;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Cairo', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+    }
+    .wrap { max-width: 960px; margin: 0 auto; }
+    h1 { font-size: 1.15rem; margin: 0 0 8px; }
+    input[type="search"] {
+      width: 100%;
+      padding: 9px 12px;
+      font: inherit;
+      font-size: .9rem;
+      color: var(--text);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    input[type="search"]:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .chip {
+      font: inherit;
+      font-size: .8rem;
+      padding: 3px 12px;
+      color: var(--text);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+    @media (prefers-color-scheme: dark) { .chip[aria-pressed="true"] { color: #042f2e; } }
+
+    main { max-width: 960px; margin: 0 auto; padding: 8px 16px 40px; }
+    .line { margin-top: 28px; }
+    .line > h2 {
+      font-size: 1.1rem;
+      margin: 0 0 4px;
+      padding-inline-start: 10px;
+      border-inline-start: 5px solid var(--c);
+    }
+    .station { margin-top: 16px; }
+    .station > h3 { font-size: .95rem; margin: 0 0 8px; }
+    .station > h3 .ar { margin-inline-start: 6px; }
+    .station > h3 small { display: block; color: var(--muted); font-weight: 400; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: .88rem;
+    }
+    .card h4 { font-size: 1rem; margin: 0; }
+    .card .en { color: var(--muted); font-size: .8rem; margin: 0 0 4px; }
+    .card p { margin: 2px 0; }
+    .ar { unicode-bidi: plaintext; }
+    .muted { color: var(--muted); }
+    .phones a { color: var(--text); text-decoration: none; }
+    .phones a + a::before { content: " / "; color: var(--muted); }
+    .links { display: flex; gap: 8px; margin-top: 8px; }
+    .links a {
+      font-size: .8rem;
+      padding: 3px 12px;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      text-decoration: none;
+    }
+    .links a:hover { background: var(--accent); color: #fff; }
+    .empty { text-align: center; color: var(--muted); padding: 40px 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Electronics Shops Near Cairo Metro</h1>
+      <input type="search" id="q" placeholder="Search by shop or station (English or Arabic)" aria-label="Search" />
+      <div class="chips" id="chips">
+        <button class="chip" data-line="all" aria-pressed="true">All</button>
+        <button class="chip" data-line="1" aria-pressed="false">Line 1</button>
+        <button class="chip" data-line="2" aria-pressed="false">Line 2</button>
+        <button class="chip" data-line="3" aria-pressed="false">Line 3</button>
+        <button class="chip" data-line="off" aria-pressed="false">Outside the metro</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="app"></main>
+
+  <script>
+    // n = shop name (Arabic), e = English name, a = address (Arabic), h = hours (English)
+    const groups = [
+      {
+        id: "1", name: "Line 1", color: "#1d4ed8",
+        stations: [
+          {
+            name: "Hadayek El-Zaitoun", ar: "حدائق الزيتون", note: "4 min walk",
+            shops: [
+              { n: "ميكرو أوم للإلكترونيات", e: "Micro Ohm Electronics", a: "31 شارع سليم الأول، برج سند (الدور الثاني)", h: "Mon – Sat, 10 AM – 8 PM", p: ["01044539059"], u: "https://microohm-eg.com/ar/", map: true }
+            ]
+          },
+          {
+            name: "El-Maadi / Thakanat El-Maadi", ar: "المعادي / ثكنات المعادي", note: "10–15 min by microbus",
+            shops: [
+              { n: "Geek Electronics", e: "", a: "زهراء المعادي، الشطر العاشر، قرب كارفور المعادي", h: "Sat – Thu, 10 AM – 8 PM", p: [], u: "https://geekelectronics.io/", map: true }
+            ]
+          }
+        ]
+      },
+      {
+        id: "2", name: "Line 2", color: "#dc2626",
+        stations: [
+          {
+            name: "Sadat / Mohamed Naguib", ar: "السادات / محمد نجيب", note: "3 min walk · Sadat connects to Line 1",
+            shops: [
+              { n: "رام للإلكترونيات", e: "RAM Electronics", a: "عمارة 32 شارع الفلكي، باب اللوق", h: "Closed Sun & Fri", p: ["02-27960551", "02-27960558"], u: "https://ram-e-shop.com", map: true },
+              { n: "فلاكس إلكترونيكس", e: "Flux Electronix", a: "19 شارع البستان، باب اللوق، الدور الأول شقة 14", h: "Daily, 10 AM – 7 PM", p: ["02-23900202"], u: "https://fluxelectronix.com", map: true },
+              { n: "فري للإلكترونيات", e: "Free Electronics", a: "21 شارع يوسف الجندي، خلف مول البستان", h: "9 AM – 7 PM, closed Sun", p: ["01019578773", "01000886654"], u: "https://free-electronic.com/", map: true },
+              { n: "مول النخيلي للإلكترونيات", e: "El-Nekhely Electronics Mall", a: "20 شارع يوسف الجندي، بجوار مول البستان", h: "10 AM – 7:30 PM, closed Sun", p: ["01270900005", "02-23923500"], u: "https://nekhely.store/ar/shop", map: true },
+              { n: "لمباترونكس", e: "Lampatronics", a: "شارع يوسف الجندي، بجوار Greek Campus، أعلى كشري التحرير (الدور الأول)", h: "Closed Sun", p: [], u: "https://lampatronics.com/home", map: true },
+              { n: "فارس PCB", e: "Fares PCB", a: "17 شارع يوسف الجندي", h: "Closed Sun", p: ["01022457902", "02-27901841"], u: "https://fares-pcb.com/", map: true },
+              { n: "مؤسسة أنور الجمال للإلكترونيات", e: "Anwar El-Gammal Electronics", a: "1 و2 شارع الأمير قدادار / 1 شارع بستان بن قريش، خلف كشري التحرير", h: "Closed Sun", p: ["01223966245", "02-27959279"], u: "https://el-gammal.com/storefront", map: true }
+            ]
+          },
+          {
+            name: "Giza", ar: "الجيزة", note: "10 min transit · by appointment",
+            shops: [
+              { n: "Tech Hub", e: "", a: "الجيزة / الهرم", h: "By appointment", p: ["01070739596", "01070739597"], u: "https://tech-hubeg.com/", map: true }
+            ]
+          }
+        ]
+      },
+      {
+        id: "3", name: "Line 3", color: "#16a34a",
+        stations: [
+          {
+            name: "Abdou Pasha", ar: "عبده باشا", note: "3 min walk",
+            shops: [
+              { n: "موست إلكترونيكس", e: "Most Electronics", a: "ميدان عبده باشا / شارع السرايات، بجوار كلية الهندسة جامعة عين شمس", h: "Sat – Thu, 10 AM – 8 PM", p: [], u: "https://mostelectronic.com/", map: true },
+              { n: "فيوتشر للإلكترونيات", e: "Future Electronics", a: "عمارة 2 شارع السرايات، ميدان عبده باشا، أعلى البريد", h: "Daily, 10 AM – 7 PM (open Sun & Fri)", p: ["01229923337", "02-26825325"], u: "https://store.fut-electronics.com", map: true }
+            ]
+          },
+          {
+            name: "Kolleyyet El-Banat", ar: "كلية البنات", note: "6 min walk",
+            shops: [
+              { n: "يوجي للإلكترونيات (UGE)", e: "UGE Electronics", a: "فيلا 28 شارع محمود حسن، خلف بنك CIB من شارع الميرغني", h: "Sat – Thu, 10 AM – 7 PM, closed Fri", p: ["01066552125", "02-24190176"], u: "https://uge-one.com", map: true }
+            ]
+          }
+        ]
+      },
+      {
+        id: "off", name: "Outside the metro", color: "#78716c",
+        stations: [
+          {
+            name: "", ar: "", note: "",
+            shops: [
+              { n: "Circuits و Filotronix", e: "", a: "6 أكتوبر، الحي الأول أمام بوابة 10 جامعة 6 أكتوبر / المجد مول، ميدان ليلة القدر", h: "", p: ["01501233941", "01151664221"], u: "https://circuits-elec.com/", ul: "Circuits", u2: "https://www.filotronix.com/", u2l: "Filotronix", map: true },
+              { n: "Makers Electronics", e: "", a: "الإسكندرية (الإبراهيمية / الرمل) – شحن للقاهرة", h: "Based in Alexandria · ships to Cairo", p: ["01211981188", "01098863658"], u: "https://makerselectronics.com", map: false }
+            ]
+          }
+        ]
+      }
+    ];
+
+    let activeLine = "all";
+    let query = "";
+
+    function card(s) {
+      const phones = s.p.length
+        ? `<p class="phones">${s.p.map(x => `<a href="tel:${x.replace(/[^\d+]/g, "")}" dir="ltr">${x}</a>`).join("")}</p>`
+        : "";
+      const hours = s.h ? `<p class="muted">${s.h}</p>` : "";
+      const en = s.e ? `<p class="en">${s.e}</p>` : "";
+      const mapUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(s.n + " " + s.a);
+      return `
+        <article class="card">
+          <h4 class="ar" lang="ar" dir="auto">${s.n}</h4>
+          ${en}
+          <p class="ar" lang="ar" dir="auto">${s.a}</p>
+          ${hours}
+          ${phones}
+          <div class="links">
+            ${s.u ? `<a href="${s.u}" target="_blank" rel="noopener noreferrer">${s.ul || "Website"}</a>` : ""}
+            ${s.u2 ? `<a href="${s.u2}" target="_blank" rel="noopener noreferrer">${s.u2l}</a>` : ""}
+            ${s.map ? `<a href="${mapUrl}" target="_blank" rel="noopener noreferrer">Map</a>` : ""}
+          </div>
+        </article>`;
+    }
+
+    function render() {
+      const q = query.trim().toLowerCase();
+      let html = "";
+
+      groups.forEach(g => {
+        if (activeLine !== "all" && activeLine !== g.id) return;
+
+        let body = "";
+        g.stations.forEach(st => {
+          const shops = st.shops.filter(s =>
+            !q || `${s.n} ${s.e} ${s.a} ${st.name} ${st.ar} ${g.name}`.toLowerCase().includes(q)
+          );
+          if (!shops.length) return;
+          body += `
+            <section class="station">
+              ${st.name ? `<h3>${st.name}<span class="ar" lang="ar" dir="rtl">${st.ar}</span><small>${st.note}</small></h3>` : ""}
+              <div class="grid">${shops.map(card).join("")}</div>
+            </section>`;
+        });
+
+        if (body) {
+          html += `<section class="line" style="--c:${g.color}"><h2>${g.name}</h2>${body}</section>`;
+        }
+      });
+
+      document.getElementById("app").innerHTML = html || `<p class="empty">No results</p>`;
+    }
+
+    document.getElementById("q").addEventListener("input", e => {
+      query = e.target.value;
+      render();
+    });
+
+    document.querySelectorAll(".chip").forEach(btn => {
+      btn.addEventListener("click", () => {
+        activeLine = btn.dataset.line;
+        document.querySelectorAll(".chip").forEach(b => b.setAttribute("aria-pressed", b === btn ? "true" : "false"));
+        render();
+      });
+    });
+
+    render();
+  </script>
+</body>
+</html>
